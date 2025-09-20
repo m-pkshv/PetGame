@@ -1,10 +1,20 @@
+#if CINEMACHINE_3_0_0 || CINEMACHINE_3_0_0_OR_NEWER || CINEMACHINE_3_OR_NEWER || CINEMACHINE_2_9_0 || CINEMACHINE_2_9_0_OR_NEWER || CINEMACHINE_2_8_0 || CINEMACHINE_2_8_0_OR_NEWER || CINEMACHINE_2_7_0 || CINEMACHINE_2_7_0_OR_NEWER || CINEMACHINE_2_6_0 || CINEMACHINE_2_6_0_OR_NEWER
+#define CINEMACHINE_AVAILABLE
+#endif
+
+#if CINEMACHINE_AVAILABLE
 using Cinemachine;
+#endif
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using _Project.Settings;
 
 namespace _Project.Cameras
 {
+
+#if CINEMACHINE_AVAILABLE
+
     [DisallowMultipleComponent]
     public class CameraRig : MonoBehaviour
     {
@@ -172,4 +182,34 @@ namespace _Project.Cameras
             }
         }
     }
+#else
+    /// <summary>
+    /// Fallback stub that keeps the project compiling when Cinemachine is not installed.
+    /// Logs a clear error so the designer knows to add the Cinemachine package to the project.
+    /// </summary>
+    [DisallowMultipleComponent]
+    public class CameraRig : MonoBehaviour
+    {
+        [SerializeField] private Transform followTarget;
+
+        private void Awake()
+        {
+            Debug.LogError("Cinemachine package is missing. Install com.unity.cinemachine via Package Manager to enable CameraRig.");
+        }
+
+        public void SetFollowTarget(Transform target)
+        {
+            followTarget = target;
+        }
+
+        public void SetPlayerInput(PlayerInput input)
+        {
+        }
+
+        public void SetPlayerSettings(PlayerSettingsSO settings)
+        {
+        }
+    }
+#endif
+
 }
