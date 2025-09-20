@@ -5,13 +5,16 @@
 #if CINEMACHINE_AVAILABLE
 using Cinemachine;
 #endif
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using _Project.Settings;
 
 namespace _Project.Cameras
 {
+
 #if CINEMACHINE_AVAILABLE
+
     [DisallowMultipleComponent]
     public class CameraRig : MonoBehaviour
     {
@@ -208,4 +211,5 @@ namespace _Project.Cameras
         }
     }
 #endif
+
 }
